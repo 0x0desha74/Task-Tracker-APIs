@@ -26,15 +26,17 @@ public class TaskList {
 
     private String description;
 
+    //remove => when we delete a task list, included tasks will be automatically deleted
+    //persist => when we save a task list , included tasks will be automatically saved
+    @OneToMany(mappedBy = "taskList",cascade = {CascadeType.REMOVE,CascadeType.PERSIST})
+    private List<Task> tasks;
+
     @Column(name = "created_at",nullable = false)
     private LocalDateTime createdAt;
 
     @Column(name = "updated_at",nullable = false)
     private LocalDateTime updatedAt;
 
-    //remove => when we delete a task list, included tasks will be automatically deleted
-    //persist => when we save a task list , included tasks will be automatically saved
-    @OneToMany(mappedBy = "taskList",cascade = {CascadeType.REMOVE,CascadeType.PERSIST})
-    private List<Task> tasks;
+
 
 }
