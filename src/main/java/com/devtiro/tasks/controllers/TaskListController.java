@@ -14,7 +14,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/task-lists")
-
 public class TaskListController {
 
     private final TaskListService taskListService;
@@ -25,11 +24,10 @@ public class TaskListController {
     }
 
     @GetMapping
-    public ResponseEntity<List<TaskListDto>> getTaskLists() {
-     var taskListDtos = taskListService.getTaskLists()
+    public List<TaskListDto> getTaskLists() {
+     return  taskListService.getTaskLists()
                .stream().map(taskListMapper::toDto)
                .toList();
-     return new ResponseEntity<>(taskListDtos,HttpStatus.OK);
     }
 
 }
