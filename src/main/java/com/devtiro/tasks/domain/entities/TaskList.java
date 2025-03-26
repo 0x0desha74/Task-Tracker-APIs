@@ -31,6 +31,7 @@ public class TaskList {
     @OneToMany(mappedBy = "taskList",cascade = {CascadeType.REMOVE,CascadeType.PERSIST})
     private List<Task> tasks;
 
+
     @Column(name = "created_at",nullable = false)
     private LocalDateTime createdAt;
 
