@@ -12,7 +12,7 @@ public record TaskDto(
         UUID id,
         String title,
         String description,
-        LocalDateTime dateTime,
+        LocalDateTime dueTime,
         TaskPriority priority,
         TaskStatus status
 
