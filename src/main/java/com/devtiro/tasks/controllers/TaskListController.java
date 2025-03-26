@@ -1,7 +1,6 @@
 package com.devtiro.tasks.controllers;
 
 import com.devtiro.tasks.domain.dto.TaskListDto;
-import com.devtiro.tasks.domain.entities.TaskList;
 import com.devtiro.tasks.mapper.TaskListMapper;
 import com.devtiro.tasks.services.TaskListService;
 import org.springframework.http.HttpStatus;
