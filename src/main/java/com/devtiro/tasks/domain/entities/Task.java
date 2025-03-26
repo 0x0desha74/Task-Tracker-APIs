@@ -42,7 +42,10 @@ public class Task {
     @Column(name = "updated_at",nullable = false)
     private LocalDateTime updatedAt;
 
-
+    //Lazy loading => the task list wouldn't be loaded from the database until it is actually needed
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "task_List_id")
+    private TaskList taskList;
 
 
 
