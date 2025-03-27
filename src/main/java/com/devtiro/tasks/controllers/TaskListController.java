@@ -30,36 +30,37 @@ public class TaskListController {
                 .stream().map(taskListMapper::toDto)
                 .toList();
 
-        return new ResponseEntity<>(taskListDtos,HttpStatus.OK);
+        return new ResponseEntity<>(taskListDtos, HttpStatus.OK);
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Optional<TaskListDto>> getTaskList(@PathVariable UUID id)
-    {
+    public ResponseEntity<Optional<TaskListDto>> getTaskList(@PathVariable UUID id) {
         var taskListDto = taskListService.getTaskList(id).map(taskListMapper::toDto);
-        return new ResponseEntity<>(taskListDto,HttpStatus.OK);
+        return new ResponseEntity<>(taskListDto, HttpStatus.OK);
     }
 
 
-
-
     @PostMapping
-    public ResponseEntity<TaskListDto> createTaskList(@RequestBody TaskListDto model){
+    public ResponseEntity<TaskListDto> createTaskList(@RequestBody TaskListDto model) {
 
         var createdTaskList = taskListService.createTaskList(
                 taskListMapper.fromDto(model)
-        ) ;
-        return new ResponseEntity<>(taskListMapper.toDto(createdTaskList),HttpStatus.CREATED);
+        );
+        return new ResponseEntity<>(taskListMapper.toDto(createdTaskList), HttpStatus.CREATED);
     }
 
 
     @PutMapping("{id}")
-    public ResponseEntity<TaskListDto> updateTaskList(@PathVariable UUID id,@RequestBody TaskListDto model)
-    {
-      TaskList updatedTaskList = taskListService.updateTaskList(id,taskListMapper.fromDto(model));
-        return new ResponseEntity<>(taskListMapper.toDto(updatedTaskList),HttpStatus.OK);
+    public ResponseEntity<TaskListDto> updateTaskList(@PathVariable UUID id, @RequestBody TaskListDto model) {
+        TaskList updatedTaskList = taskListService.updateTaskList(id, taskListMapper.fromDto(model));
+        return new ResponseEntity<>(taskListMapper.toDto(updatedTaskList), HttpStatus.OK);
     }
 
 
+    @DeleteMapping("{id}")
+    public ResponseEntity<HttpStatus> deleteTaskList(@PathVariable UUID id) {
+        taskListService.deleteTaskList(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 
 }
