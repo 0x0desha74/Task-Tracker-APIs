@@ -14,12 +14,12 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping(path = "/task-lists")
-public class TaskListController {
+public class TaskListsController {
 
     private final TaskListService taskListService;
     private final TaskListMapper taskListMapper;
 
-    public TaskListController(TaskListService taskListService, TaskListMapper taskListMapper) {
+    public TaskListsController(TaskListService taskListService, TaskListMapper taskListMapper) {
         this.taskListService = taskListService;
         this.taskListMapper = taskListMapper;
     }
