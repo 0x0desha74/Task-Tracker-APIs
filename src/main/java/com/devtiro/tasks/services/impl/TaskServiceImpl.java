@@ -11,8 +11,10 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
+
 @Service
 public class TaskServiceImpl implements TaskService {
     private final TaskRepository taskRepository;
@@ -31,9 +33,9 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public Task createTask(UUID taskListId, Task task) {
-        if(null != task.getId())
+        if (null != task.getId())
             throw new IllegalArgumentException("Task already has an Id");
-        if(null == task.getTitle()|| task.getTitle().isBlank())
+        if (null == task.getTitle() || task.getTitle().isBlank())
             throw new IllegalArgumentException("Task have a title");
 
         TaskPriority taskPriority = Optional.ofNullable(task.getPriority()).orElse(TaskPriority.MEDIUM);
@@ -54,12 +56,41 @@ public class TaskServiceImpl implements TaskService {
                 now
         );
 
-      return  taskRepository.save(createdTask);
+        return taskRepository.save(createdTask);
 
     }
 
     @Override
     public Optional<Task> getTask(UUID taskListId, UUID taskId) {
-        return taskRepository.findByTaskListIdAndId(taskListId,taskId);
+        return taskRepository.findByTaskListIdAndId(taskListId, taskId);
+    }
+
+    @Override
+    public Task updateTask(UUID taskListId, UUID taskId, Task task) {
+
+        if (null == task.getId())
+            throw new IllegalArgumentException("Task must have an Id");
+
+        if (!Objects.equals(taskId, task.getId()))
+            throw new IllegalArgumentException("Attempting to change task Id, this is not permitted");
+
+        if(null == task.getPriority())
+            throw new IllegalArgumentException("Task must have a valid priority");
+
+        if(null == task.getStatus())
+            throw new IllegalArgumentException("Task must have a valid status");
+
+        var existingTask = taskRepository.findByTaskListIdAndId(taskListId, taskId)
+                .orElseThrow(() -> new IllegalArgumentException("Task not found"));
+
+        existingTask.setTitle(task.getTitle());
+        existingTask.setDescription(task.getDescription());
+        existingTask.setDueDate(task.getDueDate());
+        existingTask.setStatus(task.getStatus());
+        existingTask.setPriority(task.getPriority());
+        existingTask.setUpdatedAt(LocalDateTime.now());
+
+        return taskRepository.save(existingTask);
+
     }
 }

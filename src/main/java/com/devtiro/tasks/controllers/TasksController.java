@@ -39,7 +39,6 @@ public class TasksController {
     }
 
 
-
     @PostMapping
     public ResponseEntity<TaskDto> createPost(@PathVariable UUID task_list_id, @RequestBody TaskDto model)
     {
@@ -47,7 +46,14 @@ public class TasksController {
         return new ResponseEntity<>(taskMapper.toDto(createdTask),HttpStatus.CREATED);
     }
 
-
+    @PutMapping("{task_id}")
+    public ResponseEntity<TaskDto> updateTask(@PathVariable UUID task_list_id,
+                                              @PathVariable UUID task_id,
+                                              @RequestBody TaskDto model)
+    {
+        var updatedTask = taskService.updateTask(task_list_id,task_id,taskMapper.fromDto(model));
+        return new ResponseEntity<>(taskMapper.toDto(updatedTask),HttpStatus.OK);
+    }
 
 
 }
