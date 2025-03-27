@@ -1,6 +1,7 @@
 package com.devtiro.tasks.controllers;
 
 import com.devtiro.tasks.domain.dto.TaskListDto;
+import com.devtiro.tasks.domain.entities.TaskList;
 import com.devtiro.tasks.mapper.TaskListMapper;
 import com.devtiro.tasks.services.TaskListService;
 import org.springframework.http.HttpStatus;
@@ -50,6 +51,15 @@ public class TaskListController {
         ) ;
         return new ResponseEntity<>(taskListMapper.toDto(createdTaskList),HttpStatus.CREATED);
     }
+
+
+    @PutMapping("{id}")
+    public ResponseEntity<TaskListDto> updateTaskList(@PathVariable UUID id,@RequestBody TaskListDto model)
+    {
+      TaskList updatedTaskList = taskListService.updateTaskList(id,taskListMapper.fromDto(model));
+        return new ResponseEntity<>(taskListMapper.toDto(updatedTaskList),HttpStatus.OK);
+    }
+
 
 
 }
