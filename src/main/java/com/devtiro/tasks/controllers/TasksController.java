@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -29,6 +30,15 @@ public class TasksController {
                 .toList();
         return new ResponseEntity<>(mappedTasks, HttpStatus.OK);
     }
+
+    @GetMapping("{task_id}")
+    public ResponseEntity<Optional<TaskDto>> getTask(@PathVariable UUID task_list_id, @PathVariable UUID task_id)
+    {
+        var taskDto = taskService.getTask(task_list_id,task_id).map(taskMapper::toDto);
+        return new ResponseEntity<>(taskDto,HttpStatus.OK);
+    }
+
+
 
     @PostMapping
     public ResponseEntity<TaskDto> createPost(@PathVariable UUID task_list_id, @RequestBody TaskDto model)
