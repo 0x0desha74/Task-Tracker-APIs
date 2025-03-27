@@ -13,7 +13,7 @@ public class TaskMapperImpl implements TaskMapper {
                 taskDto.id(),
                 taskDto.title(),
                 taskDto.description(),
-                taskDto.dueTime(),
+                taskDto.dueDate(),
                 taskDto.status(),
                 taskDto.priority(),
                 null,

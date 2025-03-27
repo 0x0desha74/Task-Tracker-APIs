@@ -1,4 +1,4 @@
-package com.devtiro.tasks.services.impl;
+package com.devtiro.tasks.services;
 
 import com.devtiro.tasks.domain.entities.Task;
 
@@ -7,4 +7,5 @@ import java.util.UUID;
 
 public interface TaskService {
     List<Task> getTasks(UUID taskListId);
+    Task createTask(UUID taskL, Task task);
 }

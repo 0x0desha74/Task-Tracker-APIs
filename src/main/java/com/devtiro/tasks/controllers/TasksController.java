@@ -2,14 +2,10 @@ package com.devtiro.tasks.controllers;
 
 import com.devtiro.tasks.domain.dto.TaskDto;
 import com.devtiro.tasks.mapper.TaskMapper;
-import com.devtiro.tasks.services.impl.TaskService;
-import org.springframework.http.HttpHeaders;
+import com.devtiro.tasks.services.TaskService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -33,6 +29,15 @@ public class TasksController {
                 .toList();
         return new ResponseEntity<>(mappedTasks, HttpStatus.OK);
     }
+
+    @PostMapping
+    public ResponseEntity<TaskDto> createPost(@PathVariable UUID task_list_id, @RequestBody TaskDto model)
+    {
+        var createdTask = taskService.createTask(task_list_id,taskMapper.fromDto(model));
+        return new ResponseEntity<>(taskMapper.toDto(createdTask),HttpStatus.CREATED);
+    }
+
+
 
 
 }
