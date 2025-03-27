@@ -8,6 +8,7 @@ import com.devtiro.tasks.repositories.TaskListRepository;
 import com.devtiro.tasks.repositories.TaskRepository;
 import com.devtiro.tasks.services.TaskService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -60,11 +61,13 @@ public class TaskServiceImpl implements TaskService {
 
     }
 
+    @Transactional
     @Override
     public Optional<Task> getTask(UUID taskListId, UUID taskId) {
         return taskRepository.findByTaskListIdAndId(taskListId, taskId);
     }
 
+    @Transactional
     @Override
     public Task updateTask(UUID taskListId, UUID taskId, Task task) {
 
@@ -92,5 +95,10 @@ public class TaskServiceImpl implements TaskService {
 
         return taskRepository.save(existingTask);
 
+    }
+    @Transactional
+    @Override
+    public void deleteTask(UUID taskListId, UUID taskId) {
+        taskRepository.deleteByTaskListIdAndId(taskListId,taskId);
     }
 }
